@@ -2,13 +2,13 @@ import os
 import ast
 import pocket
 from flask import Flask
-from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 
 CONSUMER_KEY = os.environ.get('CONSUMER_KEY')
 TOKEN_PAIRS = os.environ.get('TOKENS')
-sched = BlockingScheduler()
+sched = BackgroundScheduler()
 
 sched.start()
 
@@ -18,7 +18,7 @@ def tag():
     return "We've tagged your stuff: " + ', '.join(names)
 
 
-@sched.scheduled_job('interval', minutes=120)
+@sched.scheduled_job('cron', day_of_week='mon-sun', hour=2)
 def tag_it_all():
     pocketiers = ast.literal_eval(TOKEN_PAIRS)
     names = []
