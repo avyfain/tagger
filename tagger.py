@@ -1,27 +1,9 @@
 import os
 import ast
 import pocket
-# from flask import Flask, render_template
-
-# app = Flask(__name__)
 
 CONSUMER_KEY = os.environ.get('CONSUMER_KEY')
 TOKEN_PAIRS = os.environ.get('TOKENS')
-
-# @app.route('/tag')
-# def tag():
-#     names = tag_it_all()
-#     return "We've tagged your stuff: " + ', '.join(names)
-
-# @app.route('/')
-# def hello():
-#     return 'Hello World! This is our pocket tagger'
-
-# @app.route('/read')
-# def read():
-#     for pocketier in pocketiers:
-#         names.append(pocketier['name'])
-#     return render_template('read.html', name=name)
 
 def tag_it_all():
     pocketiers = ast.literal_eval(TOKEN_PAIRS)
@@ -76,20 +58,6 @@ def tag_user_articles(consumer_key, token, qty=1000):
 
     client.commit()
 
-# def get_union():
-#     pocketiers = ast.literal_eval(TOKEN_PAIRS)
-#     for pocketier in pocketiers:
-#         client = pocket.Pocket(CONSUMER_KEY, pocketier['token'])
-#         data, headers = client.get(count=1000)
-#         try: 
-#             union = union & set(data['list'].keys())
-#         except:
-#             union = set(data['list'].keys())
-
-#     union_strings = []
-#     for item in union:
-#         union_strings.append(data['list'][item]['resolved_title'] +' '+ data['list'][item]['resolved_url'])
-#     return union_strings
-
 if __name__ == '__main__':
+    print("Starting article tagger")
     tag_it_all()    
